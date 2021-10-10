@@ -10,7 +10,7 @@ then run it along with passing some command line arguments. The target
 issue:
 
 ```console
-$ nx run my-app:execute -- -a --an-arg 3 --another-arg=test --= foo
+$ nx run my-app:execute -- -a --an-arg 3 --another-arg=test --= foo = baz test
 
 > nx run my-app:execute --a --anArg=3 --anotherArg=test --==foo
 process.argv.slice(2):
@@ -20,7 +20,6 @@ process.argv.slice(2):
 
 >  NX   SUCCESS  Running target "execute" succeeded
 
-
 ```
 
 Note the following argument mangling issues:
@@ -29,3 +28,4 @@ Note the following argument mangling issues:
 2. Long form args that aren't joined with their value with an equals sign is forced into that format, e.g., `--an-arg 3` which should be two separate entries in `argv` is instead squashed into `--an-arg=3`.
 3. Dashes are removed from argument names, and then the name is converted into camel case, e.g., `--another-arg=test` gets transformed into `--anotherArg=test`.
 4. Argument processing does not handle free form arguments with equal signs, e.g., `--= foo` in an intermediate stage gets squashed to `--==foo` when the command is echoed, and then it gets processed again into two separate `argv` entries: `---==foo` and `--==foo`.
+5. All positional arguments starting from and after an `=` is completely removed from `argv`.

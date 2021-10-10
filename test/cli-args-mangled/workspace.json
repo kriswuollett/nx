@@ -35,6 +35,12 @@
             "buildTarget": "my-app:build"
           }
         },
+        "execute": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "node dist/apps/my-app/main.js"
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
